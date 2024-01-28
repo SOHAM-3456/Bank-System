@@ -6,9 +6,9 @@
 typedef struct customer
 {
 	long long int accno;
-	char name[20];
+	char name[60];
 	char IFSC[12];
-	char branch[40];
+	char branch[60];
 	int balance;
 	
 }cus;
@@ -19,25 +19,37 @@ void withdraw(cus **,int);
 void search(cus **,int);
 void checkbalance(cus **,int);
 void privatedata(cus **,int);
+void transaction(cus **,int);
 
 
 void main()
 {
-    struct customer cus,*custo,**c;
+    	struct customer cus,*custo,**c;
 	int option,i=0,password=0;
 	char ch;
 	long long int acc=25980345648;
 	int check=662004;
 	do
 	{
-		printf("\n********************************\n");
-		printf("1. New Entry\n");
-		printf("2. Deposit\n");
-		printf("3. Withdraw\n");
-		printf("4. Search\n");
-		printf("5. Check balance\n");
-		printf("6. Exit\n");
-		printf("\n********************************\n");
+		printf("%c",201);
+		for(int o=1;o<35;o++)
+		{
+			printf("%c",205);
+		}
+		printf("%c",187);
+		printf("\n%c\t1. New Entry\t\t   %c",186,186);
+		printf("\n%c\t2. Deposit\t\t   %c",186,186);
+		printf("\n%c\t3. Withdraw\t\t   %c",186,186);
+		printf("\n%c\t4. Search\t\t   %c",186,186);
+		printf("\n%c\t5. Check balance\t   %c",186,186);
+		printf("\n%c\t6. Transfer money\t   %c",186,186);
+		printf("\n%c\t7. Exit\t\t\t   %c",186,186);
+		printf("\n%c",200);
+		for(int o=1;o<35;o++)
+		{
+			printf("%c",205);
+		}
+		printf("%c\n",188);
 		
 		printf("Enter your choice : ");
 		scanf("%d",&option);
@@ -70,6 +82,10 @@ void main()
 					break;
 				}
 				case 6:{
+					transaction(c,i-1);
+					break;
+				}
+				case 7:{
 					printf("\n\t*********Exiting*********\n\n");
 					exit(0);
 				}
@@ -94,21 +110,22 @@ void main()
 							break;
 						}
 					}
-					else{
+					else
+					{
 						printf("\n\tAccess Denied!\n");
 						break;
-					}
-					
+					}	
 				}
 				default :{
 					printf("\n\tInvalid Option Enter Correct Option\n");
 					break;
 				}
 			}
-		
 	}
-	while(option!=6);
+	while(option!=7);
 }
+
+
 
 cus** newentry(cus **n,int i,long long int acc)
 {
@@ -128,13 +145,12 @@ cus** newentry(cus **n,int i,long long int acc)
 			  {
 				  if(n[i]->name[j]>=97&&n[i]->name[j]<=122)
 				  {
-					  n[i]->name[j]=n[i]->name[j]-32;
+					  n[i]->name[j] = n[i]->name[j]-32;
 				  }
 			  }
 		  }
 	  }
 	printf("\nEnter IFSC code : ");
-	//scanf("%lld",&n[i]->IFSC);
 	scanf("%s",&n[i]->IFSC);
 	printf("\nEnter Branch name : ");
 	scanf("\n");
@@ -156,7 +172,7 @@ cus** newentry(cus **n,int i,long long int acc)
 	do
 	{
 		printf("\nEnter the balance (Minimum 500 balance required!) : ");
-     	scanf("%d",&amount);
+     		scanf("%d",&amount);
 		if(amount>=500)
 		{
 			n[i]->balance=amount;
@@ -167,6 +183,7 @@ cus** newentry(cus **n,int i,long long int acc)
 		else if(j==2)
 		{
 			n[i]->balance=0;
+			printf("\n************* Account not created due to low balance! *************\n\n");
 			break;
 		}
 		else
@@ -179,6 +196,54 @@ cus** newentry(cus **n,int i,long long int acc)
 	return n;
 }
 
+void transaction(cus **n,int k)
+{
+	long long int ano1,ano2;
+	int m=-1,p=-1;
+	printf("\nEnter Account number from which to transfer money : ");
+	scanf("%lld",&ano1);
+	printf("\nEnter the Account number in which to tranfer money : ");
+	scanf("%lld",&ano2);
+	for(int i=0;i<=k;i++)
+	{
+		if(n[i]->accno==ano1)
+		{
+			m=i;
+		}
+		else if(n[i]->accno==ano2)
+		{
+			p=i;
+		}
+		else if(m!=1 && p!=1)
+		{
+			break;
+		}
+	}
+	
+	if( m==-1 || p==-1 )
+	{
+		printf("\n\tAccount number not found!\n\n");
+	}
+	else
+	{
+		int n1,c,amount;
+		n1=n[m]->balance;
+		printf("\nEnter Amount to transfer : ");
+		scanf("%d",&amount);
+		c=n1-amount;
+		if(c<500)
+		{
+			printf("\n\tTransfer canceled!n\n");
+		}
+		else
+		{
+			n[p]->balance += amount;
+			n[m]->balance -=amount;
+			printf("\n\tTransfer Successful!\n\n");
+		}
+	}
+	
+}
 
 void search(cus **s,int k)
 {
@@ -188,23 +253,33 @@ void search(cus **s,int k)
 	scanf("%lld",&accno);
 	while(k>=0)
 	{    
-        if(s[k]->accno==accno)
+       		if(s[k]->accno==accno)
 		{ 
-           	flag=1;
-	        break;
+           		flag=1;
+	      		break;
 		}
 		else
-		{  k--;}
-    }
+		{  
+			k--;
+		}
+        }
 	if(flag==1)
 	{
-	    printf("\n********************************************\n");
-		printf("\n\tAccount number : %lld\n",s[k]->accno);
+		printf("\n\n");
+		for(int o=1;o<57;o++)
+		{
+			printf("%c",178);
+		}
+		printf("\n\n\tAccount number : %lld\n",s[k]->accno);
 		printf("\tAccount Holder name : %s\n",s[k]->name);
 		printf("\tIFSC Code : %s\n",s[k]->IFSC);
 		printf("\tBranch name : %s\n",s[k]->branch);
-		printf("\tBalance : %d\n",s[k]->balance);
-		printf("\n********************************************\n");
+		printf("\tBalance : %d\n\n",s[k]->balance);
+		for(int o=1;o<57;o++)
+		{
+			printf("%c",178);
+		}
+		printf("\n\n");
 	}
 	else
 	{
@@ -220,21 +295,23 @@ void deposit(cus **d,int k)
 	scanf("%lld",&accno);
 	while(k>=0)
 	{    
-        if(d[k]->accno==accno)
+       		if(d[k]->accno==accno)
 		{ 
-           	flag=1;
-	        break;
+           		flag=1;
+	       		break;
 		}
 		else
-		{  k--;}
-    }
+		{  
+			k--;
+		}
+        }
 	if(flag==1)
 	{
-	int amount=0;
-	printf("\nEnter the amount you want to deposit : ");
-	scanf("%d",&amount);
-	d[k]->balance=d[k]->balance+amount;
-	printf("\n\tAmount deposited successfully!\n");
+		int amount=0;
+		printf("\nEnter the amount you want to deposit : ");
+		scanf("%d",&amount);
+		d[k]->balance=d[k]->balance+amount;
+		printf("\n\tAmount deposited successfully!\n");
 	}
 	else
 	{
@@ -250,13 +327,15 @@ void withdraw(cus **w,int k)
 	scanf("%lld",&accno);
 	while(k>=0)
 	{    
-        if(w[k]->accno==accno)
+      		if(w[k]->accno==accno)
 		{ 
-           	flag=1;
-	        break;
+           		flag=1;
+	      	  	break;
 		}
 		else
-		{  k--;}
+		{  
+			k--;
+		}
     }
 	if(flag==1)
 	{
@@ -289,20 +368,22 @@ void checkbalance(cus **b,int k)
 	scanf("%lld",&accno);
 	while(k>=0)
 	{    
-        if(b[k]->accno==accno)
+        	if(b[k]->accno==accno)
 		{ 
-           	flag=1;
-	        break;
+           		flag=1;
+	        	break;
 		}
 		else
-		{  k--;}
-    }
+		{  
+			k--;
+		}
+        }
 	
 	if(flag==1)
 	{
 		printf("\n\tBalance is : %d\n",b[k]->balance);
 	}
-    else
+    	else
 	{
 		printf("\n\tEntered Account doesn't exit\n");
 	}
@@ -310,15 +391,25 @@ void checkbalance(cus **b,int k)
 
 void privatedata(cus **s,int k)
 {
-	int i;
+	int i,o;
 	for(i=0;i<=k;i++)
 	{
-		printf("\n********************************************\n");
-		printf("\n\tAccount number : %lld\n",s[i]->accno);
+		if(i==0)
+		{
+			for(int o=1;o<57;o++)
+			{
+				printf("%c",178);
+			}
+		}
+		printf("\n\n\tAccount number : %lld\n",s[i]->accno);
 		printf("\tAccount Holder name : %s\n",s[i]->name);
 		printf("\tIFSC Code : %s\n",s[i]->IFSC);
 		printf("\tBranch name : %s\n",s[i]->branch);
-		printf("\tBalance : %d\n",s[i]->balance);
-		printf("\n********************************************\n");
+		printf("\tBalance : %d\n\n",s[i]->balance);
+		for(int o=1;o<57;o++)
+		{
+			printf("%c",178);
+		}
+		printf("\n");
 	}
 }
